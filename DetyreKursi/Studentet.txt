@@ -1,4 +1,4 @@
 1 Albi Goxhaj AlbiGoxhaj 14/08/1997 110 test1234 1 
 2 Alfred Peza AlfredPeza 14/08/1997 605 12345 0 
-3 Dev Allushi DevAllushi 14/08/1997 0 1361 1 
+3 Dev Allushi DevAllushi 14/08/1997 203 1361 1 
 4 Eftali Skendo EftaliSkendo 14/08/1997 0 858992492 1 

@@ -1,15 +1,22 @@
-25 1 fff bb jjj b 2 pyetje test? 
-40 1 gg yun sgt c 2 pyetje test2? 
-25 1 aff oll un a 3 Pyetje 1? 
-25 1 af kk njhbj b 3 Pyetje 2? 
-25 1 af mmm yvyb a 3 yetje 3? 
-25 2 af kfa nini b 6 PAL pyetje1? 
-40 2 gg jn pppp a 6 PAL pyetje2? 
-25 2 gg ii oo a 9 GAL3? 
-25 2 ff iii ppp b 9 GAL2? 
-25 2 gg kk ll a 9 GAL3? 
-20 3 ff gg tt a 8 faf afa? 
-20 3 fgg dwad gwsf b 8 af afaf? 
-20 3 gg ppp iijn c 8 afaf afaf? 
-20 3 ff oo mmm a -858993460 afwwaf? 
-20 3 af pppp oohn a -858993460 afaf afg? 
+1 fff bb jjj b 2 pyetje test?
+1 gg yun sgt c 2 pyetje test2? 
+1 aff oll un a 3 Pyetje 1? 
+1 af kk njhbj b 3 Pyetje 2? 
+1 af mmm yvyb a 3 yetje 3? 
+2 af kfa nini b 6 PAL pyetje1? 
+2 gg jn pppp a 6 PAL pyetje2? 
+2 gg ii oo a 9 GAL3? 
+2 ff iii ppp b 9 GAL2? 
+2 gg kk ll a 9 GAL3? 
+3 ff gg tt a 8 faf afa? 
+3 fgg dwad gwsf b 8 af afaf? 
+3 gg ppp iijn c 8 afaf afaf? 
+3 ff oo mmm a -858993460 afwwaf? 
+3 af pppp oohn a -858993460 afaf afg? 
+3 rrr tt nn a -858993460 fa aff ? 
+3 aaf pp daff b -858993460 faf koj? 
+3 ff kkkk nnn c -858993460 afaf af? 
+3 b awd ffaf b -858993460 fafaw ihuuh awf fa ? 
+3 adwa ttt vfgf a -858993460 afawf ooo unnn tvbnn? 
+3 awa fff ghtuy a -858993460 dawfw iljlij afwaf? 
+3 awdaw gsg dwaf wa -858993460 afdawd okojmo awfwaf? 

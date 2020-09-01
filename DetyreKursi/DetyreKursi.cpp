@@ -33,7 +33,6 @@ struct pedagog
 struct pyetjet
 {
 	char pyetja[256];
-	int piket ;
 	int pedagogId;
 	char al1[32];
 	char al2[32];
@@ -185,7 +184,7 @@ void LogimSiAdmin()
 				while (1)
 				{
 					printf("Kryeni veprine  :\n");
-					printf("1 - Shto Student\n2 - Shto Pedagog\n3 - Fshi student\n4 - Fshi Pedagog\n5 - Shiko te gjithe studentet\n6 - Shiko te gjthe pedagoget\n7 - Kerko Student \n8 - Ndrysho Fjalekalimin\n9 - Shfaq rezultatet\n0 - Dil");
+					printf("1 - Shto Student\n2 - Shto Pedagog\n3 - Fshi student\n4 - Fshi Pedagog\n5 - Shiko te gjithe studentet\n6 - Shiko te gjthe pedagoget\n7 - Kerko Student \n8 - Ndrysho Fjalekalimin\n9 - Shfaq rezultatet\n0 - Dil \n");
 					int kodi;
 					int id = 0;
 					scanf("%d", &kodi);
@@ -403,13 +402,13 @@ void ShtoStudent()
 	f = fopen(fstudent, "a");
 	if(f != NULL)
 	{
-		long fjalekamlimi = gjeneroFjalekalim(s.id_student, s.emri, s.mbiemri);
+		int studentId = gjejIdMaxStudent() + 1;
+		long fjalekamlimi = gjeneroFjalekalim(studentId, s.emri, s.mbiemri); //gjenerimi i fjalekalimit 
 		char password[1000];
-		sprintf(password, "%d", fjalekamlimi);
+		sprintf(password, "%d", fjalekamlimi); //konvertimi i fjalekalimit ne string
 		char EmriPerdoruesit[100]; //krijimi i emrit te perdoruesit
 		strcpy(EmriPerdoruesit, s.emri);
 		strcat(EmriPerdoruesit, s.mbiemri);
-		int studentId = gjejIdMaxStudent() + 1;
 		fprintf(f,"%d %s %s %s %s %d %s %d \n", studentId, s.emri, s.mbiemri, EmriPerdoruesit, s.datelindja, s.piket, password, s.status);
 		fclose(f);
 		printf("Studenti u shtua.\n");
@@ -441,13 +440,13 @@ void ShtoPedagog()
 	f = fopen(fpedagog, "a");
 	if(f != NULL)
 	{
-		long fjalekamlimi = gjeneroFjalekalim(p.id_pedagog, p.emri, p.mbiemri);
+		int pedagogId = gjejIdMaxProfesor() + 1;
+		long fjalekamlimi = gjeneroFjalekalim(pedagogId, p.emri, p.mbiemri);
 		char password[1000];
 		sprintf(password, "%d", fjalekamlimi);
 		char EmriPerdoruesit[100]; //krijimi i emrit te perdoruesit
 		strcpy(EmriPerdoruesit, p.emri);
 		strcat(EmriPerdoruesit, p.mbiemri);
-		int pedagogId = gjejIdMaxProfesor() + 1;
 		fprintf(f,"%d %s %s %s %s %s %d \n", pedagogId, p.emri, p.mbiemri, EmriPerdoruesit,password, p.lenda,p.status);
 		fclose(f);
 		printf("Pedagogu u shtua.\n");
@@ -541,16 +540,15 @@ void hartoProvim(int pedagogId)
 			char al4[32] = "Nuk e di";
 			printf("Jepni pergjigjen (a ,b ose c): \n");
 			scanf("%s", &p.pergjigja);
-			printf("Jepni piket: \n");
-			scanf("%d",&p.piket);
-			fprintf(f, "%d %d %s %s %s %s %d %s \n", p.piket , pedagogId,p.al1,p.al2,p.al3,p.pergjigja, Provimi.IdProvimi ,p.pyetja);
+			fprintf(f, "%d %s %s %s %s %d %s \n", pedagogId,p.al1,p.al2,p.al3,p.pergjigja, Provimi.IdProvimi ,p.pyetja);
 		}
 		fclose(f);
+		printf("----------------------------------------------------------------------------------------------\n");
 
 	}
 	else
 	{
-		printf("Something went wrong with read()! %s\n", strerror(errno));
+		printf("Veprimi nuk u krye");
 
 	}
 		
@@ -589,9 +587,11 @@ void shikoRezultatetMeZeroPike(int pedagogID)
 				}
 			}
 			fclose(f);
+			printf("----------------------------------------------------------------------------------------------\n");
 			if (nmr == 0)
 			{
 				printf("Nuk ka rezultate me kete provim \t");
+				printf("----------------------------------------------------------------------------------------------\n");
 				return;
 			}
 
@@ -638,14 +638,23 @@ int shikoProvimet(int pedagogId)
 {
 	struct provimi p;
 	FILE* f = fopen(fprovimi, "r");
+	int i = 0;
 	if (f != NULL)
 	{
 		printf("Zgjidh provimin ku doni te futeni : \n");
 		printf(" \t Tema Provimit\n");
 		while (fscanf(f, "%d %d %s", &p.IdProvimi, &p.idPedagogu, &p.TemeProvimi) != EOF)
 		{
+			i++;
 			if (p.idPedagogu == pedagogId)
 				printf("%d \t %s\n", p.IdProvimi, p.TemeProvimi);
+		}
+		if (i == 0)
+		{
+			printf("Ky professor ska provime");
+			fclose(f);
+			return 0;
+
 		}
 		printf("0 - Shiko te gjitha provimet \n");
 		int provimi = 0;
@@ -661,6 +670,7 @@ int shikoProvimetStudent(int pedagogId)
 {
 	struct provimi p;
 	FILE* f = fopen(fprovimi, "r");
+	int i = 0;
 	if (f != NULL)
 	{
 		printf("Zgjidh provimin qe doni te shikoni : \n");
@@ -825,19 +835,27 @@ void GjejStudent(int studentid)
 {
 	struct student s;
 	FILE* f = fopen(fstudent, "r");
+	int i = 0;
 	if (f != NULL)
 	{
 		while (fscanf(f, " %d %s %s %s %s %d %s %d", &s.id_student, &s.emri, &s.mbiemri, &s.emriPerdoruesit, &s.datelindja, &s.piket, &s.password, &s.status) != EOF)
 		{
+			
 			if (studentid == s.id_student)
 			{
+				i++;
 				printf("\nID studenti:\t%d\nEmer:\t\t%s\nMbiemer:\t%s\nEmri i Perdoruesit :\t%s\nDatelindja:\t%s\nPiket:\t\t%d\nPassword:\t\t%s\nStatus:\t\t%d\n", s.id_student, s.emri, s.mbiemri, s.emriPerdoruesit, s.datelindja, s.piket, s.password, s.status);
 				fclose(f);
 				return ;
 			}
 		}
-		printf("Ky student nuk ekziston!");
-		fclose(f);
+		if (i == 0)
+		{
+			printf("Ky student nuk ekziston!");
+			fclose(f);
+			return;
+		}
+	
 	}
 	else printf("Veprimi nuk u krye.");
 	return ;
@@ -873,7 +891,7 @@ void ShfaqPyetjet()
 	{
 		printf("tPergjigje\tPiket\tPyetja\n");
 		while(fread(&p, sizeof(p), 1, f))
-		printf("%d\t%d\t\t%d\t%s\n", p.pergjigja, p.piket, p.pyetja);
+		printf("%d\t%d\t\t1\t%s\n", p.pergjigja, p.pyetja);
 	}
 	else printf("Veprimi nuk u krye.");
 	fclose(f);
@@ -905,6 +923,7 @@ void FshiPedagog()
 		remove(fpedagog);
 		int o = rename("skedartemp.txt", fpedagog);
 		printf("Pedagogu me ID %d u diaktivizua.\n", id);
+		printf("----------------------------------------------------------------------------------------------\n");
 	}
 	else printf("Veprimi nuk u krye.");
 	return;
@@ -934,7 +953,8 @@ void FshiStudent()
 		fclose(temp);
 		remove(fstudent);
 		int o = rename("skedartemp.txt", fstudent);
-		printf("Pedagogu me ID %d u diaktivizua.\n", id);
+		printf("Studenti me ID %d u diaktivizua.\n", id);
+		printf("----------------------------------------------------------------------------------------------\n");
 	}
 	else printf("Veprimi nuk u krye.");
 	return;
@@ -944,14 +964,26 @@ void shfaqProvimePerPedagog(int pedagog , int studentId)
 {
 	struct provimi p;
 	FILE* f = fopen(fprovimi, "r");
+	int i = 0;
 	if (f != NULL)
 	{
+		printf("----------------------------------------------------------------------------------------------\n");
 		printf("Zgjidh provimin ku doni te futeni : \n");
 		printf(" \t Tema Provimit\n");
 		while (fscanf(f, "%d %d %s", &p.IdProvimi, &p.idPedagogu, &p.TemeProvimi) != EOF)
 		{
-			if(p.idPedagogu == pedagog)
-			printf("%d \t %s\n", p.IdProvimi, p.TemeProvimi);
+			if (p.idPedagogu == pedagog)
+			{
+				i++;
+				printf("%d \t %s\n", p.IdProvimi, p.TemeProvimi);
+
+			}
+		}
+		if (i == 0)
+		{
+			printf("Kjo lende ska provime . \n");
+			printf("----------------------------------------------------------------------------------------------\n");
+			return;
 		}
 		int provimi = 0;
 		scanf("%d", &provimi);
@@ -1036,7 +1068,7 @@ void futuNeProvim(int pedagogID , int studentId ,int provimID) //Futu ne provim
 	s = KerkoStudent(studentId);
 	pedagog PED = Kerko_pedagogID(pedagogID);
 	provimi PROVIMI = kerkoProvim(pedagogID, provimID);
-	int i = 1;
+	int i = 0;
 	float shumaPikeve = 0;
 	FILE *f = fopen(fpyetjet, "r");
 	time_t t = time(NULL);
@@ -1047,27 +1079,28 @@ void futuNeProvim(int pedagogID , int studentId ,int provimID) //Futu ne provim
 	int SkaProvim = 0;
 	int nmrProvimeve = 0;
 	FILE* temp = fopen("skedarTEmp.txt", "w"); //Ruajtja e rezulatateve ne nje skedar temp per tu shfaqur ne fund te provimit
+	printf("----------------------------------------------------------------------------------------------\n");
 	printf("Data : %d-%02d-%02d \n" , tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
 
 	if(f != NULL)
 	{
 		char ans[32] = "";
-		while(fscanf(f, "%d %d %s %s %s %s %d %[^\n]" , &p.piket, &p.pedagogId, &p.al1, &p.al2,&p.al3,&p.pergjigja ,&p.IdProvimi, &p.pyetja) != EOF)
+		while(fscanf(f, "%d %s %s %s %s %d %[^\n]" ,  &p.pedagogId, &p.al1, &p.al2,&p.al3,&p.pergjigja ,&p.IdProvimi, &p.pyetja) != EOF)
 		{
 			nmrProvimeve++;
 			if (p.pedagogId == pedagogID && p.IdProvimi == provimID) //Ky kushte eshte qe te shfaqet provimi qe eshte zgjedhur nga studenti
 			{
 
-				printf("Pyetja %d: %s \t %d pike. \n", i, p.pyetja , p.piket);
+				printf("Pyetja %d: %s \t 1 pike. \n", i, p.pyetja );
 				printf("a. %s b. %s c. %s d. Nuk e di \n", p.al1 , p.al2,p.al3);
-				printf(" Zgjidh alternativen \n");
+				printf(" Zgjidh alternativen (1 fjale) \n");
 				scanf("%s", &ans);
 				struct rezultatIDetajuar rz;
 				rz.pedagogID = pedagogID;
 				strcpy(rz.pergjigjaStudentit, ans);
 				strcpy(rz.pergjigjeSakte, p.pergjigja);
 				strcpy(rz.pyetja, p.pyetja);
-				rz.piketPerPyetje = p.piket;
+				rz.piketPerPyetje = 1;
 				rz.studentId = studentId;
 				rz.Id_provimi = provimID;
 				strcpy(rz.lenda, PED.lenda);
@@ -1075,7 +1108,7 @@ void futuNeProvim(int pedagogID , int studentId ,int provimID) //Futu ne provim
 				if (strcmp(ans, p.pergjigja) == 0)
 				{
 					rez = 1;
-					pikeProvimi += p.piket;
+					pikeProvimi += 1;
 				} 
 				FILE* fz = fopen(frezultateDetajuar, "a"); //Ruajtja e rezultateve ne skedarin e rezultateve te detajuar 
 				if (fz != NULL)
@@ -1090,7 +1123,7 @@ void futuNeProvim(int pedagogID , int studentId ,int provimID) //Futu ne provim
 
 				}
 				i++;
-				shumaPikeve += p.piket;
+				shumaPikeve += 1;
 				memset(ans, 0, 32);
 
 			}
@@ -1143,6 +1176,7 @@ void futuNeProvim(int pedagogID , int studentId ,int provimID) //Futu ne provim
 					}
 					printf("%s \t \t \t %s \t \t \t %d \t %s \t \t \t \t %s\n", p.pergjigjeSakte, p.pergjigjaStudentit, p.piketPerPyetje, p.pyetja, rezultati);
 				}
+				printf("----------------------------------------------------------------------------------------------\n");
 			}
 			fclose(f);
 		}
@@ -1242,6 +1276,7 @@ void AfishoPiketMeTeUleta(int pedagogID)
 
 					}
 				}
+			printf("----------------------------------------------------------------------------------------------\n");
 			fclose(f);
 		}
 		f = fopen(frezultateProvimi, "r");
@@ -1255,6 +1290,7 @@ void AfishoPiketMeTeUleta(int pedagogID)
 					if (s.piketEFituara == pmin) printf("%s %s\n", s.emriStudent, s.mbiemriStudent);
 				}
 			}
+			printf("----------------------------------------------------------------------------------------------\n");
 			fclose(f);
 		}
 		return;
@@ -1332,6 +1368,7 @@ void AfishoPiketMeTeLarta(int pedagogID)
 					if (s.piketEFituara == pmax) printf("%s %s\n", s.emriStudent, s.mbiemriStudent);
 				}
 			}
+			printf("----------------------------------------------------------------------------------------------\n");
 			fclose(f);
 		}
 		return;
@@ -1367,6 +1404,7 @@ void AfishoPiketMeTeLarta(int pedagogID)
 						if (s.piketEFituara == pmax) printf("%s %s\n", s.emriStudent, s.mbiemriStudent);
 					}
 				}
+				printf("----------------------------------------------------------------------------------------------\n");
 				fclose(f);
 			}
 			return;
@@ -1468,7 +1506,7 @@ void shikoPyetjenKuEshteGabuarMeShume(int pedagog)
 			}
 			printf("Pyetja ku eshte gabuar me shume eshte : \n");
 			printf("%s \t %d \n", s, max);
-
+			printf("----------------------------------------------------------------------------------------------\n");
 			fclose(f);
 			return;
 
@@ -1547,6 +1585,7 @@ void ShikoRezultatetStudent(int studentId)
 		if (f != NULL)
 		{
 			int nmr = 0;
+			printf("----------------------------------------------------------------------------------------------\n");
 			printf("Rezultatet \n");
 			//printf("Provimi \t  Emer \t \t Mbiemer \t Piket \t Eshte kalues \t Mesatarja \n");
 			while (fscanf(f, "%s %d %d %d %s %s %d %d %f", &s.TemaProvimit, &s.id_pedagog, &s.idStudenti, &s.Id_provimi, &s.emriStudent, &s.mbiemriStudent, &s.piketEFituara, &s.kalues, &s.mesatarja) != EOF)
@@ -1612,6 +1651,7 @@ void ShikoRezultatetStudent(int studentId)
 		if (f != NULL)
 		{
 			int nmr = 0;
+			printf("----------------------------------------------------------------------------------------------\n");
 			printf("Rezultatet \n");
 			//printf("Provimi \t  Emer \t \t Mbiemer \t Piket \t Eshte kalues \t Mesatarja \n");
 			while (fscanf(f, "%s %d %d %d %s %s %d %d %f", &s.TemaProvimit, &s.id_pedagog, &s.idStudenti, &s.Id_provimi, &s.emriStudent, &s.mbiemriStudent, &s.piketEFituara, &s.kalues, &s.mesatarja) != EOF)
@@ -1686,6 +1726,7 @@ void ShikoTeGjithaRezultatetTotal(int studentId)
 	if (f != NULL)
 	{
 		int nmr = 0;
+		printf("----------------------------------------------------------------------------------------------\n");
 		printf("Rezultatet \n");
 		//printf("Provimi \t  Emer \t \t Mbiemer \t Piket \t Eshte kalues \t Mesatarja \n");
 		while (fscanf(f, "%s %d %d %d %s %s %d %d %f", &s.TemaProvimit, &s.id_pedagog, &s.idStudenti, &s.Id_provimi, &s.emriStudent, &s.mbiemriStudent, &s.piketEFituara, &s.kalues, &s.mesatarja) != EOF)
@@ -1820,7 +1861,8 @@ void ndrshoPassword()
 	printf("\n 1 - Student \n 2 - Pedagog \n");
 	int kodi = 0;
 	scanf("%d", &kodi);
-	char fjalekalimi[50];
+	char fjalekamlimi[50];
+	long password;
 	switch (kodi)
 	{
 	case 1://Ndrysho password Student
@@ -1839,10 +1881,9 @@ void ndrshoPassword()
 				
 				if (s.id_student == studentId)
 				{
-					//password = gjeneroFjalekalim(s.id_student, s.emri, s.emriPerdoruesit);
-					printf("Jepni fjalekalimin e ri : \n");
-					scanf("%s", &fjalekalimi);
-					strcpy(s.password, fjalekalimi);
+					password = gjeneroFjalekalim(s.id_student, s.emri, s.emriPerdoruesit);
+					sprintf(fjalekamlimi ,"%d", password);
+					strcpy(s.password, fjalekamlimi);
 				}
 				fprintf(temp, "%d %s %s %s %s %d %s %d \n", s.id_student, s.emri, s.mbiemri, s.emriPerdoruesit, s.datelindja, s.piket, s.password, s.status);
 
@@ -1851,7 +1892,8 @@ void ndrshoPassword()
 			fclose(temp);
 			remove(fstudent);
 			rename("skedartemp.txt", fstudent);
-			printf("Studenti me ID %d iu ndryshua fjalekalimi.\n Fjalekalimi ri : %s \n", studentId , fjalekalimi);
+			printf("Studenti me ID %d iu ndryshua fjalekalimi.\n Fjalekalimi ri : %s \n", studentId , fjalekamlimi);
+			printf("----------------------------------------------------------------------------------------------\n");
 			return;
 		}
 		else
@@ -1875,9 +1917,9 @@ void ndrshoPassword()
 				if (p.id_pedagog == id)
 				{
 					//fjalekalimi = gjeneroFjalekalim(p.id_pedagog,p.emri,p.mbiemri);
-					printf("Jepni fjalekalimin e ri : \n");
-					scanf("%s", &fjalekalimi);
-					strcpy(p.password, fjalekalimi);
+					password = gjeneroFjalekalim(s.id_student, s.emri, s.emriPerdoruesit);
+					sprintf(fjalekamlimi, "%d", password);
+					strcpy(s.password, fjalekamlimi);
 				}
 				fprintf(temp, "%d %s %s %s %s %s %d \n", p.id_pedagog, p.emri, p.mbiemri, p.emriPerdoruesit, p.password, p.lenda, p.status);
 
@@ -1886,7 +1928,7 @@ void ndrshoPassword()
 			fclose(temp);
 			remove(fpedagog);
 			rename("skedartemp.txt", fpedagog);
-			printf("Pedagogu me ID %d iu ndryshua fjalekalimi.\n Fjalekalimi ri : %s \n", id, fjalekalimi);
+			printf("Pedagogu me ID %d iu ndryshua fjalekalimi.\n Fjalekalimi ri : %s \n", id, fjalekamlimi);
 			printf("----------------------------------------------------------------------------------------------\n");
 			return;
 		}
@@ -1908,6 +1950,7 @@ void shfaqRezultatet()
 	if (f != NULL)
 	{
 		int nmr = 0;
+		printf("----------------------------------------------------------------------------------------------\n");
 		printf("Rezultatet \n");
 		//printf("Provimi \t  Emer \t \t Mbiemer \t Piket \t Eshte kalues \t Mesatarja \n");
 		while (fscanf(f, "%s %d %d %d %s %s %d %d %f", &s.TemaProvimit, &s.id_pedagog, &s.idStudenti, &s.Id_provimi, &s.emriStudent, &s.mbiemriStudent, &s.piketEFituara, &s.kalues, &s.mesatarja) != EOF)

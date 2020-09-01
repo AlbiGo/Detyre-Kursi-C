@@ -146,7 +146,6 @@
     <Text Include="..\..\..\..\Desktop\Detyre Kursi_C\pedagoget.txt" />
     <Text Include="..\..\..\..\Desktop\Detyre Kursi_C\pyetjet.txt" />
     <Text Include="..\..\..\..\Desktop\Detyre Kursi_C\studentet.txt" />
-    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
