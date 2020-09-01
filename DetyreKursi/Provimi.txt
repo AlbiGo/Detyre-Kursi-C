@@ -1,0 +1,7 @@
+2 1 Elektro
+3 1 Vektoret 
+6 2 PAL 
+9 2 GAL 
+8 3 Furie 
+10 3 Furie 
+11 3 Laplas 

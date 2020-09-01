@@ -1,0 +1,1 @@
+As parameters enter the name of each text files.

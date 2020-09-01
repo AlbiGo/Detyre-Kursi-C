@@ -1,0 +1,7 @@
+GAL 2 2 9 Alfred Peza 50 1 12.500000 
+Pal 2 2 6 Alfred Peza 60 1 12.500000 
+Elektro 1 1 2 Albi Goxhaj 0 0 0.000000 
+GAL 2 1 9 Albi Goxhaj 50 1 12.500000 
+Furie 3 1 8 Albi Goxhaj 40 1 10.000000 
+Elektro 1 1 2 Albi Goxhaj 0 0 0.000000 
+Elektro 1 1 2 Albi Goxhaj 0 0 0.000000 
