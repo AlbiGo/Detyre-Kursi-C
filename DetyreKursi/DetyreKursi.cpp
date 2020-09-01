@@ -84,36 +84,37 @@ struct provimi
 	char TemeProvimi[32];
 };
 int gjejIdMaxProvim(); //fnx qe ben autoincrementimin e IDse se provimit
-int gjejIdMaxProfesor();//Done
-int gjejIdMaxStudent();//Don
-void ShtoStudent(); //done
-void ShtoPedagog(); //done
-void hartoProvim(int pedaogog); //done
-student KerkoStudent(int studentId); //done
-void ShfaqPyetjet(); //done
-void FshiPedagog(); //done
-void FshiStudent(); //done
-void shikoRezultatinTeDetajuar(int s,int d ,int p); //Done
-void shikoPyetjenKuEshteGabuarMeShume(int pedagogID); //done  
-void shfaqTeGjitheProvimet(int studentId); //done
-void futuNeProvim(int pedagogId , int studentId , int provimi); //Done
-pedagog Kerko_pedagog(char emri[32] , char mbiemri[32]); //done
-void LogimSiStudent(); //done
-void LogimSiPedagog(); //done
-void LogimSiAdmin(); //done
-void GjejStudent(int studentid); //done
-void AfishoPiketMeTeUleta(int pedagogID); //done
-void AfishoPiketMeTeLarta(int pedagogID); //done
-void shikoTegjitheStudentet(); //Done
-void ShikoRezultatet(int pedagogId); //done
-void ShikoRezultatetStudent(int studentID); //Done
-void shikoTegjithePedagoget(); //Done
-pedagog Kerko_pedagogID(int pedagog); //done
-void shikoRezultatetMeZeroPike(int pedagog); //done
-long gjeneroFjalekalim(int id, char emer[32] , char Mbiemer[32]); //Done
-int shikoProvimet(int pedagog);//Donee
-void ndrshoPassword(); //done
-void ShikoTeGjithaRezultatetTotal(int studentId);//done
+int gjejIdMaxProfesor();//fnx qe ben autoincrementimin e IDse se profesorit
+int gjejIdMaxStudent();//fnx qe ben autoincrementimin e IDse se studentit
+void ShtoStudent(); //
+void ShtoPedagog(); //
+void hartoProvim(int pedaogog); //
+student KerkoStudent(int studentId); //
+void ShfaqPyetjet(); //
+void FshiPedagog(); //
+void FshiStudent(); //
+void shikoRezultatinTeDetajuar(int s,int d ,int p); //
+void shikoPyetjenKuEshteGabuarMeShume(int pedagogID); //  
+void shfaqTeGjitheProvimet(int studentId); //
+void futuNeProvim(int pedagogId , int studentId , int provimi); //
+pedagog Kerko_pedagog(char emri[32] , char mbiemri[32]); //
+void LogimSiStudent(); //
+void LogimSiPedagog(); //
+void LogimSiAdmin(); //
+void GjejStudent(int studentid); //
+void AfishoPiketMeTeUleta(int pedagogID); //
+void AfishoPiketMeTeLarta(int pedagogID); //
+void shikoTegjitheStudentet(); //
+void ShikoRezultatet(int pedagogId); //
+void ShikoRezultatetStudent(int studentID); //
+void shikoTegjithePedagoget(); //
+pedagog Kerko_pedagogID(int pedagog); //
+void shikoRezultatetMeZeroPike(int pedagog); //
+long gjeneroFjalekalim(int id, char emer[32] , char Mbiemer[32]); //
+int shikoProvimet(int pedagog);//
+void ndrshoPassword(); //
+void ShikoTeGjithaRezultatetTotal(int studentId);//
+void shfaqRezultatet();
 
 char fstudent[32], fpedagog[32], fpyetjet[32], fKredenciale[32], frezultateProvimi[32], frezultateDetajuar[32] , fprovimi[32];
 
@@ -184,7 +185,7 @@ void LogimSiAdmin()
 				while (1)
 				{
 					printf("Kryeni veprine  :\n");
-					printf("1 - Shto Student\n2 - Shto Pedagog\n3 - Fshi student\n4 - Fshi Pedagog\n5 - Shiko te gjithe studentet\n6 - Shiko te gjthe pedagoget\n7 - Kerko Student \n8 - Ndrysho Fjalekalimin\n9 - Dil\n");
+					printf("1 - Shto Student\n2 - Shto Pedagog\n3 - Fshi student\n4 - Fshi Pedagog\n5 - Shiko te gjithe studentet\n6 - Shiko te gjthe pedagoget\n7 - Kerko Student \n8 - Ndrysho Fjalekalimin\n9 - Shfaq rezultatet\n0 - Dil");
 					int kodi;
 					int id = 0;
 					scanf("%d", &kodi);
@@ -207,9 +208,11 @@ void LogimSiAdmin()
 						scanf("%d", &id);
 						GjejStudent(id);
 						break;
+					case 9:shfaqRezultatet();
+						break;
 					case 8:ndrshoPassword();
 						break;
-					case 9:
+					case 0:
 						return;
 					default: printf("Kod i gabuar\n");
 					}
@@ -469,8 +472,8 @@ void shikoTegjitheStudentet()
 				strcpy(status, "Aktiv");
 			}
 			//printf(" %d\t%s\t%s\t\t%s\t\t%s\t%d\t%s\t\t%s \n", s.id_student,s.emri, s.mbiemri, s.emriPerdoruesit,s.datelindja,s.piket,s.password ,status);
-			printf("\nID studenti:\t%d\nEmer:\t\t%s\nMbiemer:\t%s\nEmri i Perdoruesit :\t%s\nDatelindja:\t%s\nPiket:\t\t%d\nPassword:\t\t%s\nStatus:\t\t%d\n", s.id_student, s.emri, s.mbiemri, s.emriPerdoruesit, s.datelindja, s.piket, s.password, s.status);
-			printf("----------------------------------------------------------------------------------------------");
+			printf("\nID studenti:\t%d\nEmer:\t\t%s\nMbiemer:\t%s\nEmri i Perdoruesit :\t%s\nDatelindja:\t%s\nPiket:\t\t%d\nPassword:\t\t%s\nStatus:\t\t%s\n", s.id_student, s.emri, s.mbiemri, s.emriPerdoruesit, s.datelindja, s.piket, s.password, status);
+			printf("----------------------------------------------------------------------------------------------  \n");
 
 		}
 		fclose(f);
@@ -495,7 +498,8 @@ void shikoTegjithePedagoget()
 			{
 				strcpy(status, "Aktiv");
 			}
-			printf("\nID Pedagogu:\t%d\nEmer:\t\t%s\nMbiemer:\t%s\nEmri i Perdoruesit :\t%s\nPassword:\t%s\nLenda:\t\t%s\nStatus:\t\t%d\n", s.id_pedagog, s.emri, s.mbiemri, s.emriPerdoruesit,s.password, s.lenda, s.status);
+			printf("\nID Pedagogu:\t%d\nEmer:\t\t%s\nMbiemer:\t%s\nEmri i Perdoruesit :\t%s\nPassword:\t%s\nLenda:\t\t%s\nStatus:\t\t%s\n", s.id_pedagog, s.emri, s.mbiemri, s.emriPerdoruesit,s.password, s.lenda, status);
+			printf("----------------------------------------------------------------------------------------------  \n");
 
 		}
 		fclose(f);
@@ -899,7 +903,7 @@ void FshiPedagog()
 		fclose(f);
 		fclose(temp);
 		remove(fpedagog);
-		rename("skedartemp.txt", fpedagog);
+		int o = rename("skedartemp.txt", fpedagog);
 		printf("Pedagogu me ID %d u diaktivizua.\n", id);
 	}
 	else printf("Veprimi nuk u krye.");
@@ -929,7 +933,7 @@ void FshiStudent()
 		fclose(f);
 		fclose(temp);
 		remove(fstudent);
-		rename("skedartemp.txt", fstudent);
+		int o = rename("skedartemp.txt", fstudent);
 		printf("Pedagogu me ID %d u diaktivizua.\n", id);
 	}
 	else printf("Veprimi nuk u krye.");
@@ -1883,6 +1887,7 @@ void ndrshoPassword()
 			remove(fpedagog);
 			rename("skedartemp.txt", fpedagog);
 			printf("Pedagogu me ID %d iu ndryshua fjalekalimi.\n Fjalekalimi ri : %s \n", id, fjalekalimi);
+			printf("----------------------------------------------------------------------------------------------\n");
 			return;
 		}
 		else printf("Veprimi nuk u krye.");
@@ -1890,4 +1895,73 @@ void ndrshoPassword()
 	}
 	return;
 		
+}
+
+void shfaqRezultatet()
+{
+	struct rezultateProvimi s;
+	FILE* f = fopen(frezultateProvimi, "r");
+	const int size = 1000;
+	int piket[size];
+	int i = 0;
+	int nmrRez = 0;
+	if (f != NULL)
+	{
+		int nmr = 0;
+		printf("Rezultatet \n");
+		//printf("Provimi \t  Emer \t \t Mbiemer \t Piket \t Eshte kalues \t Mesatarja \n");
+		while (fscanf(f, "%s %d %d %d %s %s %d %d %f", &s.TemaProvimit, &s.id_pedagog, &s.idStudenti, &s.Id_provimi, &s.emriStudent, &s.mbiemriStudent, &s.piketEFituara, &s.kalues, &s.mesatarja) != EOF)
+		{
+			
+				nmr++;
+				char kalimi[32] = "Jo";
+				piket[i] = s.piketEFituara;
+				i++;
+				nmrRez++;
+
+			
+		}
+		fclose(f);
+		if (nmr == 0)
+		{
+			printf("Nuk keni rezultate \n");
+			return;
+		}
+		for (int i = 0; i < nmrRez; i++)
+		{
+			for (int j = 0; j < nmrRez; j++)
+			{
+				if (piket[j] > piket[i])
+				{
+					int tmp = piket[i];
+					piket[i] = piket[j];
+					piket[j] = tmp;
+				}
+			}
+		}
+
+		int k = 0;
+		for (int i = nmrRez - 1; i >= 0; i--)
+		{
+			f = fopen(frezultateProvimi, "r");
+			while (fscanf(f, "%s %d %d %d %s %s %d %d %f", &s.TemaProvimit, &s.id_pedagog, &s.idStudenti, &s.Id_provimi, &s.emriStudent, &s.mbiemriStudent, &s.piketEFituara, &s.kalues, &s.mesatarja) != EOF)
+			{
+				char kalimi[32] = "Jo";
+
+				if (piket[i] == s.piketEFituara)
+				{
+					if (s.kalues == 1)
+					{
+						strcpy(kalimi, "po");
+					}
+					printf("\nTema e provimit:\t%s\nEmer:\t\t%s\nMbiemer:\t%s\nPiket:\t%d\nKalues:\t%s\nMesatarja:\t\t%f\n", s.TemaProvimit, s.emriStudent, s.mbiemriStudent, s.piketEFituara, kalimi, s.mesatarja);
+					printf("----------------------------------------------------------------------------------------------\n");
+
+				}
+
+			}
+		}
+		fclose(f);
+		return;
+	}
 }

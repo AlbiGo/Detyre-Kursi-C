@@ -1,3 +1,4 @@
 1 Ina Papa InaPapa 12345678 tek 0 
-2 Ilir Shinko IlirShinko 1234 esp 1 
+2 Ilir Shinko IlirShinko 1234 esp 0 
 3 Evjola Spaho EvjolaSpaho 3348 PNS 1 
+4 Jonny Sins JonnySins 858992708 Biology 1 
