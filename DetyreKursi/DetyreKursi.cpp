@@ -3,10 +3,11 @@
 #include <string.h>
 #define _CRT_SECURE_NO_DEPRECATE
 #include <errno.h>
-#include <time.h>#include <string.h>
+#include <time.h>
+#include <string.h>
 #include <stdlib.h>
 
-
+//Strukturat
 struct student
 {
 	int id_student;
@@ -37,10 +38,11 @@ struct pyetjet
 	char al1[32];
 	char al2[32];
 	char al3[32];
-	int IdProvimi;
+	int IdProvimi; //ID e provimit ku gjendet pyetja
 	char pergjigja[1];
 
 };
+
 struct admin
 {
  int id_admin;
@@ -67,9 +69,9 @@ struct  rezultatIDetajuar //Rezultate per cdo pyetje qe jep studenti
 	char pergjigjeSakte[200];
 	char pergjigjaStudentit[200];
 	int piketPerPyetje;
-	int pedagogID;
-	int studentId;
-	int Id_provimi;
+	int pedagogID; // ID e Pedagogut qe harton provimin
+	int studentId; //ID e studentit qe futet ne provim
+	int Id_provimi;//ID e provimit
 	char lenda[32];
 	int rezultati;        //1 nese studenti e gjetur pyetjen 0 nese se ka gjetur
 	char pyetja[500];
@@ -78,10 +80,14 @@ struct  rezultatIDetajuar //Rezultate per cdo pyetje qe jep studenti
 
 struct provimi
 {
-	int IdProvimi;
+	int IdProvimi;// ID e Pedagogut qe harton provimin
 	int idPedagogu;
 	char TemeProvimi[32];
 };
+
+
+
+//Deklarimi i Funksioneve
 int gjejIdMaxProvim(); //fnx qe ben autoincrementimin e IDse se provimit
 int gjejIdMaxProfesor();//fnx qe ben autoincrementimin e IDse se profesorit
 int gjejIdMaxStudent();//fnx qe ben autoincrementimin e IDse se studentit
@@ -109,14 +115,15 @@ void ShikoRezultatetStudent(int studentID); //
 void shikoTegjithePedagoget(); //
 pedagog Kerko_pedagogID(int pedagog); //
 void shikoRezultatetMeZeroPike(int pedagog); //
-long gjeneroFjalekalim(int id, char emer[32] , char Mbiemer[32]); //
+long gjeneroFjalekalim(int id, char emerMbiemer[32]); //
 int shikoProvimet(int pedagog);//
 void ndrshoPassword(); //
 void ShikoTeGjithaRezultatetTotal(int studentId);//
 void shfaqRezultatet();
 
-char fstudent[32], fpedagog[32], fpyetjet[32], fKredenciale[32], frezultateProvimi[32], frezultateDetajuar[32] , fprovimi[32];
 
+char fstudent[32], fpedagog[32], fpyetjet[32], fKredenciale[32], frezultateProvimi[32], frezultateDetajuar[32] , fprovimi[32];
+//Main
 int main(int argc, char * argv[])
 {
 	if(argc != 8)
@@ -124,6 +131,8 @@ int main(int argc, char * argv[])
 		printf("Gabim ne argumenta(Jepni emrat e kater skedareve ku keni ruajtur te dhenat e studenteve ,pedagogeve dhe pyetjeve ).");
 		return 0;
 	}
+
+
 	strcpy(fstudent, argv[1]);
 	strcpy(fpedagog, argv[2]);
 	strcpy(fpyetjet, argv[3]);
@@ -162,7 +171,9 @@ int main(int argc, char * argv[])
 	//printf("1 - Per shtimin e nje studenti\n2 - Per shtimin e nje pedagogu\n3 - Per shtimin e nje pyetjeje\n4 - Per te kerkuar te dhenat e nje studenti\n5 - Per te shfaqur te gjitha pyetjet e pedagogeve\n");
 	//printf("6 - Per te fshire te dhenat e nje pedagogu\n7 - Per te futur nje student ne testim\n8 - Per te afishuar studentet me piket me te larta dhe me te uleta\n9 - Per te kerkuar nje pedagog \n0 - Per te mbyllur programin\n\n");
 }
+//End Main
 
+//Implementimi i funskioneve
 void LogimSiAdmin()
 {
 	struct admin s;
@@ -175,9 +186,9 @@ void LogimSiAdmin()
 	if(f != NULL)
 	{
 		struct admin strukture_temp;
-		while(fscanf(f, "%d %s %s", &strukture_temp.id_admin, &strukture_temp.emri, &strukture_temp.password) != EOF)
+		while(fscanf(f, "%d %s %s", &strukture_temp.id_admin, &strukture_temp.emri, &strukture_temp.password) != EOF) // ben brdhjen ne skedar
 		{
-			if(strcmp(strukture_temp.emri, emri) == 0 && strcmp(strukture_temp.password, fjalekalimi) == 0)
+			if(strcmp(strukture_temp.emri, emri) == 0 && strcmp(strukture_temp.password, fjalekalimi) == 0) //Kontrollon nqs emri i perdoruesit dhe fjalekalimi jaen te barabarte me emrin dhe fjalekalimin e dhene 
 			{
 				printf("Ju jeni loguar me sukses si admin. \n");
 				fclose(f);
@@ -227,14 +238,9 @@ void LogimSiAdmin()
 			}
 		}
 		
-			printf("out");
 
 	}
-	else
-	{
-		printf("Something went wrong with read()! %s\n", strerror(errno));
 
-	}
 } 
 
 void LogimSiStudent()
@@ -284,7 +290,8 @@ void LogimSiStudent()
 	}
 	else
 	{
-		printf("Something went wrong with read()! %s\n", strerror(errno));
+		printf("Dicka shkoi keq! %s\n", strerror(errno)); 
+	//	return;
 
 	}
 	//printf("ID e pedagogut nuk ekziston ose password i gabuar!");
@@ -359,23 +366,17 @@ void LogimSiPedagog()
 
 }
 
-long gjeneroFjalekalim(int id, char emer[] , char Mbiemer[])// ID* (shuma e karaktereve te emer + mbiemer sipas kodit ASCII).
+long gjeneroFjalekalim(int id, char emerMbiemer[])// ID* (shuma e karaktereve te emer + mbiemer sipas kodit ASCII).
 {
-	int len = strlen(emer);
+	int len = strlen(emerMbiemer);
 	int sum = 0;
 	for (int i = 0; i < len; i++)
 	{
-		sum = sum + emer[i];
+		sum = sum + emerMbiemer[i];
 
 	}
-	int lenMbiemer = strlen(Mbiemer);
-	int sumMbiemri = 0;
-	for (int i = 0; i < lenMbiemer; i++)
-	{
-		sumMbiemri = sumMbiemri + Mbiemer[i];
-
-	}
-	long fjalekalimi = id * (sum + sumMbiemri);
+	
+	long fjalekalimi = id * (sum);
 	return fjalekalimi;
 }
 
@@ -403,12 +404,13 @@ void ShtoStudent()
 	if(f != NULL)
 	{
 		int studentId = gjejIdMaxStudent() + 1;
-		long fjalekamlimi = gjeneroFjalekalim(studentId, s.emri, s.mbiemri); //gjenerimi i fjalekalimit 
+		
+		char EmriPerdoruesit[100]; //krijimi i emrit te perdoruesit
+		strcpy(EmriPerdoruesit, s.emri); //kopjon te EmriPerdoruesit emrin
+		strcat(EmriPerdoruesit, s.mbiemri);//shton te EmriPerdoruesit mbiemrin -> krjohet EmriPerdoruesit
+		long fjalekamlimi = gjeneroFjalekalim(studentId, EmriPerdoruesit); //gjenerimi i fjalekalimit 
 		char password[1000];
 		sprintf(password, "%d", fjalekamlimi); //konvertimi i fjalekalimit ne string
-		char EmriPerdoruesit[100]; //krijimi i emrit te perdoruesit
-		strcpy(EmriPerdoruesit, s.emri);
-		strcat(EmriPerdoruesit, s.mbiemri);
 		fprintf(f,"%d %s %s %s %s %d %s %d \n", studentId, s.emri, s.mbiemri, EmriPerdoruesit, s.datelindja, s.piket, password, s.status);
 		fclose(f);
 		printf("Studenti u shtua.\n");
@@ -420,8 +422,8 @@ void ShtoStudent()
 
 void ShtoPedagog()
 {
-	struct pedagog p;
-	printf("Jepni te dhenat e pedagogut ne formatin: [Emer] [Mbiemer] [Lenda] [Status]: \n ");
+	struct pedagog p; 
+	printf("Jepni te dhenat e pedagogut ne formatin: [Emer] [Mbiemer] [Lenda] [Status]: \n "); //Leximi nga command line
 	scanf("%s %s %s  %d", &p.emri, &p.mbiemri  , &p.lenda  ,&p.status );
 	FILE *f = fopen(fpedagog, "r");
 	if(f != NULL)
@@ -441,13 +443,13 @@ void ShtoPedagog()
 	if(f != NULL)
 	{
 		int pedagogId = gjejIdMaxProfesor() + 1;
-		long fjalekamlimi = gjeneroFjalekalim(pedagogId, p.emri, p.mbiemri);
-		char password[1000];
-		sprintf(password, "%d", fjalekamlimi);
 		char EmriPerdoruesit[100]; //krijimi i emrit te perdoruesit
 		strcpy(EmriPerdoruesit, p.emri);
 		strcat(EmriPerdoruesit, p.mbiemri);
-		fprintf(f,"%d %s %s %s %s %s %d \n", pedagogId, p.emri, p.mbiemri, EmriPerdoruesit,password, p.lenda,p.status);
+		long fjalekamlimi = gjeneroFjalekalim(pedagogId, EmriPerdoruesit);
+		char password[1000];
+		sprintf(password, "%d", fjalekamlimi);
+		fprintf(f,"%d %s %s %s %s %s %d \n", pedagogId, p.emri, p.mbiemri, EmriPerdoruesit,password, p.lenda,p.status); //Ruan ne skedar
 		fclose(f);
 		printf("Pedagogu u shtua.\n");
 	}
@@ -473,7 +475,7 @@ void shikoTegjitheStudentet()
 			//printf(" %d\t%s\t%s\t\t%s\t\t%s\t%d\t%s\t\t%s \n", s.id_student,s.emri, s.mbiemri, s.emriPerdoruesit,s.datelindja,s.piket,s.password ,status);
 			printf("\nID studenti:\t%d\nEmer:\t\t%s\nMbiemer:\t%s\nEmri i Perdoruesit :\t%s\nDatelindja:\t%s\nPiket:\t\t%d\nPassword:\t\t%s\nStatus:\t\t%s\n", s.id_student, s.emri, s.mbiemri, s.emriPerdoruesit, s.datelindja, s.piket, s.password, status);
 			printf("----------------------------------------------------------------------------------------------  \n");
-
+			memset(status, 0, 32);
 		}
 		fclose(f);
 		return;
@@ -499,6 +501,7 @@ void shikoTegjithePedagoget()
 			}
 			printf("\nID Pedagogu:\t%d\nEmer:\t\t%s\nMbiemer:\t%s\nEmri i Perdoruesit :\t%s\nPassword:\t%s\nLenda:\t\t%s\nStatus:\t\t%s\n", s.id_pedagog, s.emri, s.mbiemri, s.emriPerdoruesit,s.password, s.lenda, status);
 			printf("----------------------------------------------------------------------------------------------  \n");
+			memset(status, 0, 32);
 
 		}
 		fclose(f);
@@ -514,6 +517,7 @@ void hartoProvim(int pedagogId)
 	struct pyetjet p;
 	int pedagogu;
 	struct provimi Provimi;
+	int IdProvimi = gjejIdMaxProvim() + 1;
 	FILE* f = fopen(fpyetjet, "a"); //krijimi i provimit
 	if (f != NULL)
 	{
@@ -522,7 +526,6 @@ void hartoProvim(int pedagogId)
 		{
 			printf("Temen e provimit : \n");
 			scanf("%s", &Provimi.TemeProvimi);
-			int IdProvimi = gjejIdMaxProvim() + 1;
 			fprintf(pr, "%d %d %s \n",IdProvimi, pedagogId, Provimi.TemeProvimi);
 		}
 		fclose(pr);
@@ -534,13 +537,13 @@ void hartoProvim(int pedagogId)
 		{
      		printf("Jepni pyetjen: \n");
 			getchar();
-			gets_s(p.pyetja);
+			gets_s(p.pyetja);//Nqs do e ranosh ne Dev-C ++ gets_s() duhet thjesht gets()
 			printf("Jepni 3 alternativa : (Nje alternative duhet te jete Nuk e di ): \n");
 			scanf("%s %s %s", &p.al1,&p.al2,&p.al3);
 			char al4[32] = "Nuk e di";
 			printf("Jepni pergjigjen (a ,b ose c): \n");
 			scanf("%s", &p.pergjigja);
-			fprintf(f, "%d %s %s %s %s %d %s \n", pedagogId,p.al1,p.al2,p.al3,p.pergjigja, Provimi.IdProvimi ,p.pyetja);
+			fprintf(f, "%d %s %s %s %s %d %s \n", pedagogId,p.al1,p.al2,p.al3,p.pergjigja, IdProvimi,p.pyetja);
 		}
 		fclose(f);
 		printf("----------------------------------------------------------------------------------------------\n");
@@ -725,7 +728,7 @@ void ShikoRezultatet(int pedagogID)
 				printf("Nuk ka rezultate me kete provim \t");
 				return;
 			}
-			for (int i = 0; i < nmrRez; i++)
+			for (int i = 0; i < nmrRez; i++) //Renditja e pikeve ne rendin rrites
 			{
 				for (int j = 0; j < nmrRez; j++)
 				{
@@ -739,7 +742,7 @@ void ShikoRezultatet(int pedagogID)
 			}
 
 			int k = 0;
-			for (int i = nmrRez - 1; i >= 0; i--)
+			for (int i = nmrRez - 1; i >= 0; i--) //printimi ne rendin zbrites
 			{
 				f = fopen(frezultateProvimi, "r");
 				while (fscanf(f, "%s %d %d %d %s %s %d %d %f", &s.TemaProvimit, &s.id_pedagog, &s.idStudenti, &s.Id_provimi, &s.emriStudent, &s.mbiemriStudent, &s.piketEFituara, &s.kalues, &s.mesatarja) != EOF)
@@ -1105,11 +1108,16 @@ void futuNeProvim(int pedagogID , int studentId ,int provimID) //Futu ne provim
 				rz.Id_provimi = provimID;
 				strcpy(rz.lenda, PED.lenda);
 				int rez = 0;
-				if (strcmp(ans, p.pergjigja) == 0)
+				if (strcmp(ans, p.pergjigja) == 0) //Nqs pergjigja e dhene nga studenti eshte e sakte shto nje pike
 				{
 					rez = 1;
 					pikeProvimi += 1;
 				} 
+				if (strcmp(ans, "d") == 0 && pikeProvimi > 0) //Nqs pergjigja e dhene nga studenti eshte e Nuk e di hiq nje pike 
+				{
+					rez = 1;
+					pikeProvimi -= 1;
+				}
 				FILE* fz = fopen(frezultateDetajuar, "a"); //Ruajtja e rezultateve ne skedarin e rezultateve te detajuar 
 				if (fz != NULL)
 				{
@@ -1482,7 +1490,7 @@ void shikoPyetjenKuEshteGabuarMeShume(int pedagog)
 					{
 						if (strcmp(p.pyetja, temp.pyetja) == 0 && p.pedagogID == pedagog)
 						{
-							if (strcmp(temp.pergjigjaStudentit, temp.pergjigjeSakte) != 0)
+							if (strcmp(temp.pergjigjaStudentit, temp.pergjigjeSakte) != 0) //Kontrollon nqs sjane te barabarta
 								count++;
 						}
 
@@ -1627,7 +1635,7 @@ void ShikoRezultatetStudent(int studentId)
 				{
 					char kalimi[32] = "Jo";
 
-					if (piket[i] == s.piketEFituara && s.id_pedagog == pedagogu && s.idStudenti)
+					if (piket[i] == s.piketEFituara && s.id_pedagog == pedagogu && s.idStudenti == studentId)
 					{
 						if (s.kalues == 1)
 						{
@@ -1881,7 +1889,7 @@ void ndrshoPassword()
 				
 				if (s.id_student == studentId)
 				{
-					password = gjeneroFjalekalim(s.id_student, s.emri, s.emriPerdoruesit);
+					password = gjeneroFjalekalim(s.id_student,s.emriPerdoruesit);
 					sprintf(fjalekamlimi ,"%d", password);
 					strcpy(s.password, fjalekamlimi);
 				}
@@ -1917,7 +1925,7 @@ void ndrshoPassword()
 				if (p.id_pedagog == id)
 				{
 					//fjalekalimi = gjeneroFjalekalim(p.id_pedagog,p.emri,p.mbiemri);
-					password = gjeneroFjalekalim(s.id_student, s.emri, s.emriPerdoruesit);
+					password = gjeneroFjalekalim(p.id_pedagog, p.emriPerdoruesit);
 					sprintf(fjalekamlimi, "%d", password);
 					strcpy(s.password, fjalekamlimi);
 				}

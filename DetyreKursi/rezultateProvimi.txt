@@ -12,3 +12,4 @@ Furie 3 3 8 Dev Allushi 60 1 20.000000
 Furie 3 3 8 Dev Allushi 20 0 6.666667 
 Furie 3 3 8 Dev Allushi 3 1 1.000000 
 Furie 3 3 8 Dev Allushi 0 0 0.000000 
+Furie 3 6 8 Irdi Xhiani 3 1 1.000000 
