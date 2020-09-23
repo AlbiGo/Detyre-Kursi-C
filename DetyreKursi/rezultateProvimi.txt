@@ -13,3 +13,5 @@ Furie 3 3 8 Dev Allushi 20 0 6.666667
 Furie 3 3 8 Dev Allushi 3 1 1.000000 
 Furie 3 3 8 Dev Allushi 0 0 0.000000 
 Furie 3 6 8 Irdi Xhiani 3 1 1.000000 
+Elektro 1 6 2 Irdi Xhiani 0 0 0.000000 
+GAL 2 6 9 Irdi Xhiani 1 0 0.333333 

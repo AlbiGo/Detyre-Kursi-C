@@ -83,3 +83,8 @@ c a 1 3 3 8 PNS 0 afaf afaf?
 a a 1 3 6 8 PNS 1 faf afa?  
 b b 1 3 6 8 PNS 1 af afaf?  
 c c 1 3 6 8 PNS 1 afaf afaf?  
+b a 1 1 6 2 tek 0 pyetje test? 
+c b 1 1 6 2 tek 0 pyetje test2?  
+a a 1 2 6 9 esp 1 GAL3?  
+b a 1 2 6 9 esp 0 GAL2?  
+a b 1 2 6 9 esp 0 GAL3?  
