@@ -537,7 +537,7 @@ void hartoProvim(int pedagogId)
 		{
      		printf("Jepni pyetjen: \n");
 			getchar();
-			gets(p.pyetja);//Nqs do e ranosh ne Dev-C ++ gets_s() duhet thjesht gets()
+			gets_s(p.pyetja);//Nqs do e ranosh ne Dev-C ++ gets_s() duhet thjesht gets()
 			printf("Jepni 3 alternativa : (Nje alternative duhet te jete Nuk e di ): \n");
 			scanf("%s %s %s", &p.al1,&p.al2,&p.al3);
 			char al4[32] = "Nuk e di";
